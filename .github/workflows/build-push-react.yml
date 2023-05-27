@@ -37,5 +37,6 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-          docker build -f ./react-client/Dockerfile -t seetharamkoya/react-docker:${{ steps.version.outputs.version }} .
+          cd react-client
+          docker build -t seetharamkoya/react-docker:${{ steps.version.outputs.version }} .
           docker push seetharamkoya/react-docker:${{ steps.version.outputs.version }}
