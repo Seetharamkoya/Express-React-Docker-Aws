@@ -4,7 +4,7 @@ FROM node:14 as build
 WORKDIR /app
 
 # Copy package.json and package-lock.json
-COPY package*.json ./
+COPY package*.json .
 
 # Install dependencies
 RUN npm ci --only=production
