@@ -1,4 +1,4 @@
-name: Build and Push Docker Images
+name: Build and Push Docker Images -expressS
 on:
   push:
     branches:
@@ -6,7 +6,6 @@ on:
 
 env:
   DOCKER_REGISTRY: https://hub.docker.com/
-  DOCKER_COMPOSE_FILE: ./docker-compose.yml
   IMAGE_NAME: ${{ github.repository }}
   
 
@@ -26,7 +25,7 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN}}
-          
+
       - name: Extract metadata (tags, labels) for Docker
         id: meta
         uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
