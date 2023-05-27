@@ -33,8 +33,13 @@ jobs:
           registry: ghcr.io
           username: ${{github.actor}}
           password: ${{secrets.GITHUB_TOKEN}}
-        
-      - name: Build and Push Docker Images
-        run: |
-          docker-compose -f docker-compose.yml up -d
-          docker-compose push
+      
+      - name: Pushing Image to Github Container Registry
+        uses: docker/build-push-action@v2
+        with:
+          context: ./express-server, ./react-client
+          version: latest
+          file: express-server/Dockerfile, react-client/Dockerfile
+          push: true
+          tags: ghcr.io/${{ github.repository }}:latest
+      
