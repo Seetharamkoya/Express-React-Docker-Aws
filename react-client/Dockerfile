@@ -9,7 +9,7 @@ COPY package*.json .
 # Install dependencies
 RUN npm ci --only=production
 
-##Copy app source code
+#Copy app source code
 COPY . .
 
 # Build React app
