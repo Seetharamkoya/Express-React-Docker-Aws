@@ -16,5 +16,5 @@ COPY . .
 # Expose the port on which the server will run
 EXPOSE 5000
 
-##Start the server
+#Start the server
 CMD ["node", "server.js"]
