@@ -1,0 +1,34 @@
+name: Build and Push Docker Images
+on:
+  push:
+    branches:
+      - main
+
+env:
+  DOCKER_REGISTRY: https://hub.docker.com/
+  DOCKER_COMPOSE_FILE: Express-React-Docker/docker-compose.yml
+  DOCKER_IMAGE_NAME: seetharamkoya/express-reactor-docker:v1.1.0
+  DOCKER_IMAGE_TAG: latest
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Compose
+        uses: docker/compose-cli@v1
+        with:
+          compose-file: ${{ env.DOCKER_COMPOSE_FILE }}
+        env:
+            DOCKER_CLI: docker
+
+      - name: Log in to Container Registry
+        run: echo "${{ secrets.CONTAINER_REGISTRY_TOKEN }}" | docker login $DOCKER_REGISTRY --username ${{ secrets.CONTAINER_REGISTRY_USERNAME }} --password-stdin
+
+      - name: Build and Push Docker Images
+        run: |
+          docker compose build
+          docker compose push
