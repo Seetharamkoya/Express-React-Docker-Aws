@@ -10,7 +10,7 @@ COPY package*.json ./
 # Install dependencies
 RUN npm install
 
-# Copy the server.js file to the container
+# Copy file to the container
 COPY . .
 
 # Expose the port on which the server will run
