@@ -35,10 +35,10 @@ jobs:
         run: |
             cd express-server
             docker build -t seetharamkoya/express-docker:${{ steps.version.outputs.version }} .
-            docker push seetharamkoya/express-react-docke:${{ steps.version.outputs.version }}
+            docker push seetharamkoya/express-react-docker:${{ steps.version.outputs.version }}
   
       - name: Build and Push Docker Image react-client
         run: |
             cd react-client
-            docker build -t seetharamkoya/react-docke:${{ steps.version.outputs.version }} .
-            docker push seetharamkoya/react-docke:${{ steps.version.outputs.version }}
+            docker build -t seetharamkoya/react-docker:${{ steps.version.outputs.version }} .
+            docker push seetharamkoya/react-docker:${{ steps.version.outputs.version }}
