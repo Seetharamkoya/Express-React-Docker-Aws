@@ -23,7 +23,13 @@ jobs:
 
       - name: Set Docker Image Version
         id: version
-        run: echo "::set-output name=version::$(echo ${GITHUB_SHA:0:7})"
+        run: |
+          if [[ "${GITHUB_REF}" == "refs/heads/main" ]]; then
+            echo "::set-output name=version::latest"
+          else
+            echo "::set-output name=version::${GITHUB_REF#refs/heads/}-${GITHUB_SHA:0:7}"
+          fi
+      
 
       - name: Login to DockerHub
         uses: docker/login-action@v1 
