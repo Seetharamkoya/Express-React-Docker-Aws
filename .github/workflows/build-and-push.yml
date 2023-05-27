@@ -7,7 +7,7 @@ on:
 env:
   DOCKER_REGISTRY: https://hub.docker.com/
   DOCKER_COMPOSE_FILE: Express-React-Docker/docker-compose.yml
-  DOCKER_IMAGE_NAME: seetharamkoya/express-reactor-docker:v1.1.0
+  DOCKER_IMAGE_NAME: seetharamkoya/express-react-docker
   DOCKER_IMAGE_TAG: latest
 
 jobs:
