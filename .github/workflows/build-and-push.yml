@@ -21,15 +21,6 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Set Docker Image Version
-        id: version
-        run: |
-          if [[ "${GITHUB_REF}" == "refs/heads/main" ]]; then
-            echo "::set-output name=version::latest"
-          else
-            echo "::set-output name=version::${GITHUB_REF#refs/heads/}-${GITHUB_SHA:0:7}"
-          fi
-
       - name: Login to DockerHub
         uses: docker/login-action@v1 
         with:
@@ -40,14 +31,13 @@ jobs:
         id: meta
         uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
         with:
-          images: seetharamkoya/express-docker
-          
+          images: seetharamkoya/express-docker         
         
       - name: Build and push Docker image
-        uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671
+        uses: docker/build-push-action@v4
         with:
           context: .
           file: ./express-server/Dockerfile
           push: true
-          tags: v1, latest
+          tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
