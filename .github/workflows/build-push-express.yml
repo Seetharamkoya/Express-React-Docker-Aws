@@ -1,8 +1,8 @@
-name: Build and Push Docker Images -expressS
+name: Build and Push Docker Images-expressS
 on:
   push:
-    branches:
-      - main
+    paths:
+      - express-server
 
 env:
   DOCKER_REGISTRY: https://hub.docker.com/
@@ -19,8 +19,6 @@ jobs:
 
       - name: Checkout Repository
         uses: actions/checkout@v2
-        with:
-          path: './express-server'
 
       - name: Set Docker Image Version
         id: version
