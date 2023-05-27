@@ -6,9 +6,7 @@ on:
 
 env:
   DOCKER_REGISTRY: https://hub.docker.com/
-  DOCKER_COMPOSE_FILE: Express-React-Docker/docker-compose.yml
-  DOCKER_IMAGE_NAME: seetharamkoya/express-react-docker
-  DOCKER_IMAGE_TAG: latest
+  DOCKER_COMPOSE_FILE: ./docker-compose.yml
 
 jobs:
   build-and-push:
@@ -31,5 +29,5 @@ jobs:
         
       - name: Build and Push Docker Images
         run: |
-          docker-compose -f ${{ env.DOCKER_COMPOSE_FILE }} build
-          docker-compose -f ${{ env.DOCKER_COMPOSE_FILE }} push 
+          docker-compose -f docker-compose.yml up -d
+          docker-compose push
