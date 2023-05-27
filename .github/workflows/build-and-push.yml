@@ -21,39 +21,20 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-    # Extract metadata (tags, labels) for Docker
-      - name: Extract metadata for Docker
-        id: meta
-        uses: docker/metadata-action@v3
-        with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-          flavor: latest=true
-          tags: |
-            # tag event
-            type=ref,enable=true,priority=600,prefix=,suffix=,event=tag
-            # pull request event
-            type=ref,enable=true,priority=600,prefix=pr-,suffix=,event=pr
-            # tag sha
-            type=sha,enable=true,priority=100,prefix=sha-,suffix=,format=long
-
       - name: Login to DockerHub
         uses: docker/login-action@v1 
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN}}
-
-      - name: 'Login to GitHub Container Registry'
-        uses: docker/login-action@v1
-        with:
-          registry: ghcr.io
-          username: ${{github.actor}}
-          password: ${{secrets.GITHUB_TOKEN}}
       
-      - name: Pushing Image to Github Container Registry
-        uses: docker/build-push-action@v2
-        with:
-          context: ./express-server, ./react-client
-          version: latest
-          file: express-server/Dockerfile, react-client/Dockerfile
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
+      - name: Build and Push Docker Image express-server
+        run: |
+            cd express-server
+            docker build -t seetharamkoya/express-react-docke:latest .
+            docker push seetharamkoya/express-react-docke:latest
+  
+      - name: Build and Push Docker Image react-client
+        run: |
+            cd react-client
+            docker build -t seetharamkoya/express-react-docke:latest .
+            docker push seetharamkoya/express-react-docke:latest
