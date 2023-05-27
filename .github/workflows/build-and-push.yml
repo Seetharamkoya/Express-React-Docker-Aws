@@ -7,7 +7,7 @@ on:
 env:
   DOCKER_REGISTRY: https://hub.docker.com/
   DOCKER_COMPOSE_FILE: ./docker-compose.yml
-  DOCKER_IMAGE_NAME: ghcr.io/seetharamkoya/express-react-docker:latest
+  IMAGE_NAME: ghcr.io/seetharamkoya/express-react-docker:latest
   
 
 jobs:
@@ -21,10 +21,20 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Set up Docker Compose
-        run: |
-          sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-          sudo chmod +x /usr/local/bin/docker-compose
+    # Extract metadata (tags, labels) for Docker
+      - name: Extract metadata for Docker
+        id: meta
+        uses: docker/metadata-action@v3
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          flavor: latest=true
+          tags: |
+            # tag event
+            type=ref,enable=true,priority=600,prefix=,suffix=,event=tag
+            # pull request event
+            type=ref,enable=true,priority=600,prefix=pr-,suffix=,event=pr
+            # tag sha
+            type=sha,enable=true,priority=100,prefix=sha-,suffix=,format=long
 
       - name: Login to DockerHub
         uses: docker/login-action@v1 
@@ -46,4 +56,5 @@ jobs:
           version: latest
           file: express-server/Dockerfile, react-client/Dockerfile
           push: true
+          tags: ${{ steps.meta.outputs.tags }}
       
