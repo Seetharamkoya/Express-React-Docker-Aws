@@ -40,14 +40,14 @@ jobs:
         id: meta
         uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
         with:
-          images: seetharamkoya/express-docker:${{ steps.version.outputs.version }}
+          images: seetharamkoya/express-docker
           
         
       - name: Build and push Docker image
         uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671
         with:
           context: .
-          file: ./express-server/Dockerfile, ./react-client/Dockerfile
+          file: ./express-server/Dockerfile
           push: true
           tags: v1, latest
           labels: ${{ steps.meta.outputs.labels }}
