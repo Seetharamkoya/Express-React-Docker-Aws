@@ -7,7 +7,7 @@ on:
 env:
   DOCKER_REGISTRY: https://hub.docker.com/
   DOCKER_COMPOSE_FILE: ./docker-compose.yml
-  IMAGE_NAME: ghcr.io/seetharamkoya/express-react-docker:latest
+  IMAGE_NAME: ${{ github.repository }}
   
 
 jobs:
@@ -57,4 +57,7 @@ jobs:
           file: express-server/Dockerfile, react-client/Dockerfile
           push: true
           tags: ${{ steps.meta.outputs.tags }}
+
+
+      - 
       
