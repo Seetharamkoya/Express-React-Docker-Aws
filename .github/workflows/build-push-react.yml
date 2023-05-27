@@ -2,7 +2,7 @@ name: Build and Push Docker Images-react
 on:
   push:
     paths:
-      - ./react-client
+      - react-client/**
 
 env:
   DOCKER_REGISTRY: https://hub.docker.com/
