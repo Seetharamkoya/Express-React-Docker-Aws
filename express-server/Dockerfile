@@ -11,7 +11,7 @@ COPY package*.json .
 RUN npm install
 
 # Copy the server.js file to the container
-COPY ./server.js .
+COPY . .
 
 # Expose the port on which the server will run
 EXPOSE 5000
