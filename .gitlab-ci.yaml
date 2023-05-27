@@ -1,0 +1,19 @@
+stages:
+  - build
+
+variables:
+  DOCKER_HOST: tcp://docker:2375
+  DOCKER_TLS_CERTDIR: ""
+  IMAGE_NAME: seetharamkoya/express-react-image:v1.0
+  DOCKERHUB_USERNAME: $DOCKERHUB_USERNAME
+  DOCKERHUB_PASSWORD: $DOCKERHUB_PASSWORD
+
+build:
+  stage: build
+  image: docker:stable
+  services:
+    - docker:dind
+  script:
+    - docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
+    - docker-compose build
+    - docker-compose push
