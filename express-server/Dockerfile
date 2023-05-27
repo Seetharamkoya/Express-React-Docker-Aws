@@ -5,13 +5,13 @@ FROM node:14-alpine
 WORKDIR /app
 
 # Copy the package.json and package-lock.json files to the container
-COPY package*.json ./
+COPY package*.json .
 
 # Install dependencies
 RUN npm install
 
 # Copy the server.js file to the container
-COPY server.js ./
+COPY ./server.js .
 
 # Expose the port on which the server will run
 EXPOSE 5000
