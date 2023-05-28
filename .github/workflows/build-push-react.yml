@@ -49,6 +49,6 @@ jobs:
           docker tag $IMAGE_NAME:latest $IMAGE_NAME:${{ steps.version.outputs.version }}
           docker push $IMAGE_NAME:latest 
           docker push $IMAGE_NAME:${{ steps.version.outputs.version }}
-          docker run -d -p 80:80 --name ${IMAGE_NAME}:latest
+          docker run -p 8800:80 --name ${IMAGE_NAME}:latest
           docker pull ${IMAGE_NAME}:latest
           docker ps
