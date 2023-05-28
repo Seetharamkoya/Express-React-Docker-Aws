@@ -1,6 +1,8 @@
 name: Build and Push Docker Images-react
 on:
-  workflow_dispatch:
+  push: 
+    branches: [ main ]
+
 
 env:
   DOCKER_REGISTRY: https://hub.docker.com/
