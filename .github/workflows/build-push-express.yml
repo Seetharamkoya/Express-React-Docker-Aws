@@ -38,7 +38,7 @@ jobs:
       
       - name: Build and Push Docker Image
         env:
-          REPO: ./express-docker
+          REPO: ./express-server
         run: |
             docker build -t $REPO .
             docker tag $REPO:latest ${{ secrets.DOCKERHUB_USERNAME }}/$REPO:${{ steps.version.outputs.version }}
