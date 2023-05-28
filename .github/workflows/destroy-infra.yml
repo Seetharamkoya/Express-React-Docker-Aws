@@ -1,0 +1,35 @@
+name: Terraform Destroy
+on:
+ workflow_dispatch:
+
+jobs:
+ tf-destroy:
+    runs-on: ubuntu-latest
+    steps:
+        - name: Checkout code
+          uses: actions/checkout@v2
+
+        - name: Set up Terraform
+          uses: hashicorp/setup-terraform@v1
+          with:
+            terraform_version: 1.4.2
+
+        - name: Configure AWS credentials
+          uses: aws-actions/configure-aws-credentials@v1
+          with:
+            aws-access-key-id: '${{ secrets.TF_USER_AWS_KEY }}'
+            aws-secret-access-key: '${{ secrets.TF_USER_AWS_SECRET }}'
+            aws-region: eu-central-1
+
+        - name: Initialize Terraform
+          working-directory: ./aws
+          run: terraform init
+        
+        - name: Plan Terraform changes
+          working-directory: ./aws
+          id: plan
+          run: terraform plan 
+
+        - name: Terraform destroy
+          id: destroy
+          run: terraform destroy -auto-approve

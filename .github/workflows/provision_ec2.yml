@@ -2,8 +2,11 @@ name: Provision Infrastructure
 
 on:
   push:
+    branches:
+        - main
     paths:
         - aws/**
+
 
 jobs:
     terraform:
@@ -39,12 +42,16 @@ jobs:
             - name: Plan Terraform changes
               working-directory: ./aws
               id: plan
-              run: terraform plan -out=tfplan
+              run: terraform plan 
+
+            - name: Terraform Plan Status
+              if: steps.plan.outcome == 'failure'
+              run: exit 1
 
             - name: Apply Terraform changes
               working-directory: ./aws
               if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-              run: terraform apply -auto-approve tfplan
+              run: terraform apply -auto-approve 
 
                 
 
