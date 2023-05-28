@@ -44,13 +44,11 @@ jobs:
             docker push $IMAGE_NAME:latest 
             docker push $IMAGE_NAME:${{ steps.version.outputs.version }}
 
-  deploy:
+  deploy-express:
     needs: build-and-push 
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-
       - name: Deploy to EC2 Instance
         uses: easingthemes/ssh-deploy@main
         with:

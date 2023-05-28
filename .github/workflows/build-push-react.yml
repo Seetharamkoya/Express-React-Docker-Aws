@@ -1,8 +1,8 @@
 name: Build and Push Docker Images-react
 on:
   push:
-    paths:
-      - react-client/**
+    branches:
+      - main
 
 env:
   DOCKER_REGISTRY: https://hub.docker.com/
@@ -42,3 +42,22 @@ jobs:
           docker tag $IMAGE_NAME:latest $IMAGE_NAME:${{ steps.version.outputs.version }}
           docker push $IMAGE_NAME:latest 
           docker push $IMAGE_NAME:${{ steps.version.outputs.version }}
+  
+
+  deploy-react:
+    needs: build-and-push 
+    runs-on: ubuntu-latest     
+    steps:
+      - name: Deploy to EC2 Instance
+        uses: easingthemes/ssh-deploy@main
+        with:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST}}
+          REMOTE_USER: ${{ secrets.REMOTE_USER }}
+          script: |
+            sudo yum update -y
+            sudo amazon-linux-extras install docker -y
+            sudo service docker start
+            sudo usermod -a -G docker ec2-user
+            docker pull $IMAGE_NAME:${{ steps.version.outputs.version }}
+            docker run -d -p 80:80 --name $IMAGE_NAME:${{ steps.version.outputs.version }}
