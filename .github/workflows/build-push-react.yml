@@ -54,10 +54,13 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           REMOTE_HOST: ${{ secrets.REMOTE_HOST}}
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
-          script: |
+          
+          SCRIPT_BEFORE: |
             sudo yum update -y
             sudo amazon-linux-extras install docker -y
             sudo service docker start
             sudo usermod -a -G docker ec2-user
+          SCRIPT_AFTER: |
             docker pull $IMAGE_NAME:${{ steps.version.outputs.version }}
+            docker ps
             docker run -d -p 80:80 --name $IMAGE_NAME:${{ steps.version.outputs.version }}
