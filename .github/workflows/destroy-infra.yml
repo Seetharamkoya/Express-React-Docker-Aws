@@ -31,5 +31,6 @@ jobs:
           run: terraform plan 
 
         - name: Terraform destroy
+          working-directory: ./aws
           id: destroy
           run: terraform destroy -auto-approve
