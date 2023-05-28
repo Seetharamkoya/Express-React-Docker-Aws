@@ -1,9 +1,13 @@
 name: Provision Infrastructure
 
 on:
-  push:
-    branches:
-        - main
+    workflow_dispatch:
+        inputs:
+          ec2-name:
+            description: EC2 
+            required: true
+            default: 'R-E-Instance'
+            type: string
 
 
 jobs:
