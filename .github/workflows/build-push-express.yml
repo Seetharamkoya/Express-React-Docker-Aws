@@ -1,8 +1,9 @@
 name: Build and Push Docker Images-express
 on:
-  push:
-    paths:
-      - express-server/**
+  push: 
+    branches:
+      - main
+    
 
 env:
   DOCKER_REGISTRY: https://hub.docker.com/
@@ -36,9 +37,11 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN}}    
       
       - name: Build and Push Docker Image
+        env:
+          REPO: express-docker
         run: |
-            cd express-server
-            docker build -t seetharamkoya/express-docker:${{ steps.version.outputs.version }} .
-            docker push seetharamkoya/express-docker:${{ steps.version.outputs.version }}
+            docker build -t $REPO .
+            docker tag $REPO:latest ${{ secrets.DOCKERHUB_USERNAME }}/$REPO:${{ steps.version.outputs.version }}
+            docker push ${{ secrets.DOCKERHUB_USERNAME }}/$REPO
 
      
