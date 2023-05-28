@@ -65,6 +65,6 @@ jobs:
       - name: deploy images
         run: |
           docker pull ${IMAGE_NAME}:latest
-          docker ps
-          docker run --detach --name react -p 8080:80 seetharamkoya/react-docker
+          docker ps -a
+          docker run -d --name react -p 8080:80 seetharamkoya/react-docker
         
