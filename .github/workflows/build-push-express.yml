@@ -7,7 +7,8 @@ on:
 
 env:
   DOCKER_REGISTRY: https://hub.docker.com/
-  IMAGE_NAME: ${{ github.repository }}
+  REPO: express-docker
+  IMAGE_NAME: ${{ secrets.DOCKERHUB_USERNAME }}/$REPO
   
 
 jobs:
@@ -37,11 +38,10 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN}}    
       
       - name: Build and Push Docker Image
-        env:
-          REPO: ./express-server
         run: |
-            docker build -t $REPO .
-            docker tag $REPO:latest ${{ secrets.DOCKERHUB_USERNAME }}/$REPO:${{ steps.version.outputs.version }}
-            docker push ${{ secrets.DOCKERHUB_USERNAME }}/$REPO
+            cd express-server
+            docker build -t $IMAGE_NAME .
+            docker tag $IMAGE_NAME:latest $IMAGE_NAME:${{ steps.version.outputs.version }}
+            docker push $IMAGE_NAME:latest $IMAGE_NAME:${{ steps.version.outputs.version }}
 
      
