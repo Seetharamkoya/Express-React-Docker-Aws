@@ -1,24 +1,29 @@
-name: CI/CD
+name: Deploy to EC2
+
 on:
- workflow_dispatch:
+  push:
+    branches:
+      - main
 
 jobs:
- deploy:
+  deploy:
     runs-on: ubuntu-latest
-    
+
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v2
-    - name: Deploy to EC2 Instance
-      uses: easingthemes/ssh-deploy@main
-      with:
-        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-        REMOTE_HOST: ${{ secrets.REMOTE_HOST}}
-        REMOTE_USER: ${{ secrets.REMOTE_USER }}
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.5.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Deploy Docker image
         run: |
-            sudo yum update -y
-            sudo amazon-linux-extras install docker -y
-            sudo service docker start
-            sudo usermod -a -G docker ec2-user |
-            docker-compose up -d
-    
+          ssh -o StrictHostKeyChecking=no <username>@<hostname> << 'EOF'
+            # Pull the latest Docker image
+            docker pull seetharamkoya/react-docker
+            
+            # Run the new container
+            docker run -d -p 8080:80 --name seetharamkoya/react-docker
+          EOF
