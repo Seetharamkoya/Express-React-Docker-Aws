@@ -1,0 +1,46 @@
+name: Provision Infrastructure
+
+on:
+  push:
+    paths:
+        - aws/**
+
+jobs:
+    terraform:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+    
+            - name: Set up Terraform
+              uses: hashicorp/setup-terraform@v1
+              with:
+                terraform_version: 1.4.2
+
+            - name: Configure AWS credentials
+              uses: aws-actions/configure-aws-credentials@v1
+              with:
+                aws-access-key-id: '${{ secrets.TF_USER_AWS_KEY }}'
+                aws-secret-access-key: '${{ secrets.TF_USER_AWS_SECRET }}'
+                aws-region: eu-central-1
+
+            - name: Initialize Terraform
+              run: terraform init
+
+            - name: Format the terraform configuration
+              run: terraform fmt
+
+            - name: Validate Terraform configuration
+              run: terraform validate
+
+            - name: Plan Terraform changes
+              id: plan
+              run: terraform plan -out=tfplan
+
+            - name: Apply Terraform changes
+              if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+              run: terraform apply -auto-approve tfplan
+
+                
+
+    
