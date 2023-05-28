@@ -1,8 +1,6 @@
 name: Build and Push Docker Images-react
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
 
 env:
   DOCKER_REGISTRY: https://hub.docker.com/
@@ -59,7 +57,7 @@ jobs:
           sudo apt-get update -y
           sudo apt-get install docker.io -y
           sudo systemctl start docker
-          sudo usermod -a -G docker *** 
+          sudo usermod -a -G docker ec2-user
           docker pull ${IMAGE_NAME}:latest
           docker ps
           docker run -d -p 80:80 --name ${IMAGE_NAME}:latest
