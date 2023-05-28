@@ -1,8 +1,8 @@
 name: Build and Push Docker Images-express
 on:
   push: 
-    branches:
-      - main
+    paths:
+      - express-server/**
     
 
 env:

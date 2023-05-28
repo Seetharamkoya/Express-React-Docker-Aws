@@ -1,6 +1,7 @@
 # Stage 1: Build React app
 FROM node:14 as build
 
+#working directory
 WORKDIR /app
 
 # Copy package.json and package-lock.json
