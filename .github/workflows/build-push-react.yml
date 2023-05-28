@@ -66,5 +66,5 @@ jobs:
         run: |
           docker pull ${IMAGE_NAME}:latest
           docker ps -a
-          docker run -d --name react -p 8080:80 seetharamkoya/react-docker
+          docker run -d --name react -p 80:80 seetharamkoya/react-docker
         
