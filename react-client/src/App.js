@@ -7,7 +7,7 @@ function App() {
   useEffect(() => {
     const fetchHelloWorld = async () => {
       try {
-        const response = await axios.get('http://52.58.83.32:5000/helloworld');
+        const response = await axios.get('http://3.66.232.161:5000/helloworld');
         setMessage(response.data.message);
       } catch (error) {
         console.error('Error calling API:', error);
