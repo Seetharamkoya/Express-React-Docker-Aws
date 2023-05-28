@@ -1,4 +1,4 @@
-name: Terraform Destroy
+name: CI/CD
 on:
  workflow_dispatch:
 
