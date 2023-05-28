@@ -56,7 +56,10 @@ jobs:
           REMOTE_HOST: ec2-3-124-122-180.eu-central-1.compute.amazonaws.com
           REMOTE_USER: ec2-user
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}  
-          script: |
+          aws-access-key-id: '${{ secrets.TF_USER_AWS_KEY }}'
+          aws-secret-access-key: '${{ secrets.TF_USER_AWS_SECRET }}'
+          aws-region: eu-central-1
+          run: |
             docker login
             docker pull ${IMAGE_NAME}:latest
             docker ps -a
