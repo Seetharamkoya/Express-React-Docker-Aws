@@ -25,19 +25,24 @@ jobs:
                 aws-region: eu-central-1
 
             - name: Initialize Terraform
+              working-directory: ./aws
               run: terraform init
 
             - name: Format the terraform configuration
+              working-directory: ./aws
               run: terraform fmt
 
             - name: Validate Terraform configuration
+              working-directory: ./aws
               run: terraform validate
 
             - name: Plan Terraform changes
+              working-directory: ./aws
               id: plan
               run: terraform plan -out=tfplan
 
             - name: Apply Terraform changes
+              working-directory: ./aws
               if: github.ref == 'refs/heads/main' && github.event_name == 'push'
               run: terraform apply -auto-approve tfplan
 
