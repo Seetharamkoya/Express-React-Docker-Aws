@@ -41,6 +41,7 @@ jobs:
             cd express-server
             docker build -t $IMAGE_NAME .
             docker tag $IMAGE_NAME:latest $IMAGE_NAME:${{ steps.version.outputs.version }}
-            docker push --all-tags #IMAGE_NAME
+            docker push $IMAGE_NAME:latest 
+            docker push $IMAGE_NAME:${{ steps.version.outputs.version }}
 
      
