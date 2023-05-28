@@ -1,8 +1,8 @@
 name: Build and Push Docker Images-express
 on:
   push: 
-    paths:
-      - express-server/**
+    branches:
+      - main
     
 
 env:
@@ -43,5 +43,31 @@ jobs:
             docker tag $IMAGE_NAME:latest $IMAGE_NAME:${{ steps.version.outputs.version }}
             docker push $IMAGE_NAME:latest 
             docker push $IMAGE_NAME:${{ steps.version.outputs.version }}
+
+  deploy:
+    needs: build-and-push 
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Deploy to EC2 Instance
+        uses: easingthemes/ssh-deploy@main
+        with:
+          AWS_PRIVATE_KEY: ${{ secrets.AWS_PRIVATE_KEY }}
+          HOSTNAME: ${{ secrets.HOSTNAME }}
+          USER_NAME: ${{ secrets.USER_NAM }}
+          script: |
+            sudo yum update -y
+            sudo amazon-linux-extras install docker -y
+            sudo service docker start
+            sudo usermod -a -G docker ec2-user
+            docker pull $IMAGE_NAME:${{ steps.version.outputs.version }}
+            docker run -d -p 5000:5000 --name $IMAGE_NAME:${{ steps.version.outputs.version }}
+    
+        
+
+
+
 
      
