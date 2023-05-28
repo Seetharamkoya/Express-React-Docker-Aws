@@ -48,8 +48,10 @@ jobs:
 
   deploy-react:
     needs: build-and-push 
-    runs-on: ubuntu-latest     
+    runs-on: ubuntu-latest 
+        
     steps:
+      -  uses: actions/checkout@v2
       - name: Deploy to EC2 Instance
         uses: easingthemes/ssh-deploy@main
         with:
