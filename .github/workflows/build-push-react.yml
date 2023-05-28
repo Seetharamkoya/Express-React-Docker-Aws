@@ -42,13 +42,13 @@ jobs:
           REMOTE_HOST: ${{ secrets.REMOTE_HOST}}
           REMOTE_USER: ${{ secrets.REMOTE_USER }}   
 
-      - name: Build and Push Docker Image
+      - name: Build, Push and deploy Docker Image
         run: |
           cd react-client
           docker build -t $IMAGE_NAME .
           docker tag $IMAGE_NAME:latest $IMAGE_NAME:${{ steps.version.outputs.version }}
           docker push $IMAGE_NAME:latest 
           docker push $IMAGE_NAME:${{ steps.version.outputs.version }}
+          docker run -d -p 80:80 --name ${IMAGE_NAME}:latest
           docker pull ${IMAGE_NAME}:latest
           docker ps
-          docker run -d -p 80:80 --name ${IMAGE_NAME}:latest
