@@ -55,12 +55,11 @@ jobs:
           REMOTE_HOST: ${{ secrets.REMOTE_HOST}}
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
           
-          SCRIPT_BEFORE: |
+          run: |
             sudo yum update -y
             sudo amazon-linux-extras install docker -y
             sudo service docker start
-            sudo usermod -a -G docker ec2-user
-          SCRIPT_AFTER: |
-            docker pull $IMAGE_NAME:${{ steps.version.outputs.version }}
+            sudo usermod -a -G docker ec2-user |
+            docker pull $IMAGE_NAME:latest
             docker ps
-            docker run -d -p 80:80 --name $IMAGE_NAME:${{ steps.version.outputs.version }}
+            docker run -d -p 80:80 --name $IMAGE_NAMElatest
