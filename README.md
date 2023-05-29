@@ -12,4 +12,4 @@ The CI/CD pipelinesteps:
 - The CI/CD pipeline deploys the latest images from Docker Hub to the AWS EC2 instance.
 - The EC2 instance pulls the updated images and starts the containers.
 - The application is now updated and running on the EC2 instance.
-- This CI/CD setup streamlines the development and deployment process by automating the building, versioning, and deployment of containerized applications using Docker and - - - Docker Hub, with the final deployment happening on an AWS EC2 instance.
+- This CI/CD setup streamlines the development and deployment process by automating the building, versioning, and deployment of containerized applications using Docker and Docker Hub, with the final deployment happening on an AWS EC2 instance.
