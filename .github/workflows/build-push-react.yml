@@ -61,8 +61,9 @@ jobs:
           aws-secret-access-key: '${{ secrets.TF_USER_AWS_SECRET }}'
           aws-region: eu-central-1
 
-      run: |
-        echo "$SSH_PUBLIC_KEY" > ~/.ssh/authorized_keys
-        ssh -o StrictHostKeyChecking=no -i SSH_PRIVATE_KEY ${REMOTE_USER}@${REMOTE_HOST} 'docker ps'
+      - name: Deploy to EC2
+        run: |
+           echo "$SSH_PUBLIC_KEY" > ~/.ssh/authorized_keys
+           ssh -o StrictHostKeyChecking=no -i SSH_PRIVATE_KEY ${REMOTE_USER}@${REMOTE_HOST} 'docker ps'
 
      
