@@ -3,7 +3,13 @@ const cors = require('cors');
 
 const app = express();
 
-app.use(cors());
+// Configure CORS to allow requests from http://ec2-3-124-122-180.eu-central-1.compute.amazonaws.com
+app.use(
+  cors({
+    origin: 'http://ec2-3-124-122-180.eu-central-1.compute.amazonaws.com',
+  })
+);
+
 app.use(express.json());
 
 // Define your API routes here
