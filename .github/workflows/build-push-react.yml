@@ -1,8 +1,6 @@
 name: Build and Push Docker Images-react
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
 
 
 
@@ -60,9 +58,11 @@ jobs:
               whoami
               sudo apt update
               sudo docker --version
-              sudo docker pull seetharamkoya/react-docker
+              sudo docker pull seetharamkoya/react-docker:${{ steps.version.outputs.version }}
               sudo docker images
               sudo docker ps
+              sudo docker stop seetharamkoya/react-docker:${{ steps.version.outputs.version }}
+              sudo docker rm seetharamkoya/react-docker:${{ steps.version.outputs.version }}
               sudo docker run -d --name react-app -p 80:80 seetharamkoya/react-docker
               
 

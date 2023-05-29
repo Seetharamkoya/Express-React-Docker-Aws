@@ -41,25 +41,26 @@ jobs:
             docker tag $IMAGE_NAME:latest $IMAGE_NAME:${{ steps.version.outputs.version }}
             docker push $IMAGE_NAME:latest 
             docker push $IMAGE_NAME:${{ steps.version.outputs.version }}
-
+         
   deploy-express:
     needs: build-and-push 
-    runs-on: ubuntu-latest
-
+    runs-on: ubuntu-latest             
     steps:
-      - name: Deploy to EC2 Instance
-        uses: easingthemes/ssh-deploy@main
-        with:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          REMOTE_HOST: ${{ secrets.REMOTE_HOST}}
-          REMOTE_USER: ${{ secrets.REMOTE_USER }}
-          script: |
-            sudo yum update -y
-            sudo amazon-linux-extras install docker -y
-            sudo service docker start
-            sudo usermod -a -G docker ec2-user
-            docker pull $IMAGE_NAME:${{ steps.version.outputs.version }}
-            docker run -d -p 5000:5000 --name $IMAGE_NAME:${{ steps.version.outputs.version }}
+    - name: executing remote ssh commands using password
+      uses: appleboy/ssh-action@v0.1.10
+      with:
+        host: ec2-35-157-187-47.eu-central-1.compute.amazonaws.com
+        username: ubuntu
+        key: ${{ secrets.KEY }} 
+        port: 22
+        script: |
+          whoami
+          sudo apt update
+          sudo docker --version
+          sudo docker pull seetharamkoya/express-docker
+          sudo docker images
+          sudo docker ps
+          sudo docker run -d --name react-app -p 80:80 seetharamkoya/express-docker
     
         
 
