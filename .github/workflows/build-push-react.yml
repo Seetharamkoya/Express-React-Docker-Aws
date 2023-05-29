@@ -61,7 +61,9 @@ jobs:
               sudo docker pull seetharamkoya/react-docker
               sudo docker images
               sudo docker ps
-              sudo docker run -d -p 80:80 seetharamkoya/react-docker
+              sudo docker stop reat-app || true
+              sudo docker rm react-app || true
+              sudo docker run -d -p 80:80 --name react-app seetharamkoya/react-docker
               
 
   
