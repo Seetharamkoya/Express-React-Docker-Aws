@@ -64,7 +64,7 @@ jobs:
 
       - name: Deploy to EC2
         run: |
-          echo "$SSH_PEM_KEY" > Docker_aws.pem && chmod 400 Docker_aws.pem
+          echo "$SSH_PEM_KEY" > Docker_aws.pem && chmod 400 Docker_aws.pem && ls && pwd
           ssh -i "Docker_aws.pem" ec2-user@ec2-3-124-122-180.eu-central-1.compute.amazonaws.com 'docker ps'
 
      
