@@ -56,5 +56,8 @@ jobs:
             username: ubuntu
             key: ${{ secrets.KEY }} 
             port: 22
-            script: whoami
+            script: |
+              whoami
+              ls -al
+
   
