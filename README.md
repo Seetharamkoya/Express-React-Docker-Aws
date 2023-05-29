@@ -13,3 +13,7 @@ The CI/CD pipelinesteps:
 - The EC2 instance pulls the updated images and starts the containers.
 - The application is now updated and running on the EC2 instance.
 - This CI/CD setup streamlines the development and deployment process by automating the building, versioning, and deployment of containerized applications using Docker and Docker Hub, with the final deployment happening on an AWS EC2 instance.
+
+### AWS Infrastructure
+
+The AWS infrastructure has been provisioned using Terraform, and the deployment process is automated through separate pipelines for provisioning and destruction. The state file, which tracks the current state of the infrastructure, is stored and managed in an S3 bucket.
