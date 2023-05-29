@@ -57,13 +57,14 @@ jobs:
           REMOTE_USER: ec2-user
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}  
           SSH_PUBLIC_KEY: ${{ secrets.SSH_PUBLIC_KEY }}  
+          SSH_PEM_KEY: ${{ secrets.SSH_PEM_KEY }}  
           aws-access-key-id: '${{ secrets.TF_USER_AWS_KEY }}'
           aws-secret-access-key: '${{ secrets.TF_USER_AWS_SECRET }}'
           aws-region: eu-central-1
 
       - name: Deploy to EC2
         run: |
-           echo "$SSH_PUBLIC_KEY" > ~/.ssh/authorized_keys
-           ssh -o StrictHostKeyChecking=no -i SSH_PRIVATE_KEY ${REMOTE_USER}@${REMOTE_HOST} 'docker ps'
+          echo "$SSH_PEM_KEY" > Docker_aws.pem && chmod 400 Docker_aws.pem
+          ssh -i "Docker_aws.pem" ec2-user@ec2-3-124-122-180.eu-central-1.compute.amazonaws.com 'docker ps'
 
      
