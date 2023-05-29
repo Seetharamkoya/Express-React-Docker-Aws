@@ -9,7 +9,7 @@ app.use(cors({
 
 // Define your API routes here
 app.get('/helloworld', (req, res) => {
-  res.json({ message: 'Hello World' });
+  res.json({ message: 'Hello Hubject:))' });
 });
 
 // Add more routes or middleware as needed
