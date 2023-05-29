@@ -13,7 +13,7 @@ env:
 
 jobs:
   build-and-push:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     steps:
       - name: Lowercase the repo name
@@ -45,6 +45,16 @@ jobs:
           docker push $IMAGE_NAME:latest 
           docker push $IMAGE_NAME:${{ steps.version.outputs.version }}
           
-  
-
+  deploy-react:
+    needs: build-and-push 
+    runs-on: ubuntu-latest             
+    steps:
+        - name: executing remote ssh commands using password
+          uses: appleboy/ssh-action@v0.1.10
+          with:
+            host: ec2-35-157-187-47.eu-central-1.compute.amazonaws.com
+            username: ubuntu
+            SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }} 
+            port: 22
+            script: whoami
   
