@@ -60,9 +60,10 @@ jobs:
               whoami
               sudo apt update
               sudo docker --version
-              sudo docker login -u $username -p $password
               sudo docker pull seetharamkoya/react-docker
               sudo docker images
+              sudo docker ps
+              sudo docker run -d --name react-app -p 80:80 seetharamkoya/react-docker
               
 
   
