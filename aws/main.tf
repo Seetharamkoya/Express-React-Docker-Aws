@@ -11,7 +11,7 @@ terraform {
 }
 
 resource "aws_instance" "example" {
-  ami           = "ami-062f79c1d054dd995"
+  ami           = "ami-04e601abe3e1a910f"
   instance_type = "t2.micro"
   key_name      = "Docker-aws"
   vpc_security_group_ids = [
