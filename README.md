@@ -17,3 +17,10 @@ The CI/CD pipelinesteps:
 ### AWS Infrastructure
 
 The AWS infrastructure has been provisioned using Terraform, and the deployment process is automated through separate pipelines for provisioning and destruction. The state file, which tracks the current state of the infrastructure, is stored and managed in an S3 bucket.
+
+
+**Note**: 
+Now, All the changes are automatically deployed to Ec2 Instance. We can also setup manual deployment through environments for approval before deploying changes.
+
+**Note**:
+ I have enable notifications on slack and Github for issues and all other actions on the repository.
