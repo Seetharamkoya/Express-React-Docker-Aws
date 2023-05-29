@@ -1,8 +1,6 @@
 name: Build and Push Docker Images-react
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch
 
 
 env:
@@ -66,4 +64,9 @@ jobs:
             docker pull ${IMAGE_NAME}:latest
             docker ps -a
             docker run -d --name react -p 80:80 seetharamkoya/react-docker
+
+      - name: Deploy to EC2
+        run: |
+            ssh -o StrictHostKeyChecking=no REMOTE_USER@REMOTE_HOST 'docker pull seetharamkoya/react-docker:latest'
+            ssh -o StrictHostKeyChecking=no REMOTE_USER@REMOTE_HOST 'docker run -d -p 80:80 --name seetharamkoya/react-docker:latest'
           
