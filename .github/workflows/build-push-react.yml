@@ -49,24 +49,19 @@ jobs:
     runs-on: ubuntu-latest 
         
     steps:
-      -  uses: actions/checkout@v2
+      - uses: actions/checkout@v2
       - name: Deploy to EC2 Instance
         uses: easingthemes/ssh-deploy@main
-        with:
+        env:
           REMOTE_HOST: ec2-3-124-122-180.eu-central-1.compute.amazonaws.com
           REMOTE_USER: ec2-user
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}  
           aws-access-key-id: '${{ secrets.TF_USER_AWS_KEY }}'
           aws-secret-access-key: '${{ secrets.TF_USER_AWS_SECRET }}'
           aws-region: eu-central-1
-          run: |
-            docker login
-            docker pull ${IMAGE_NAME}:latest
-            docker ps -a
-            docker run -d --name react -p 80:80 seetharamkoya/react-docker
 
       - name: Deploy to EC2
         run: |
-            ssh -o StrictHostKeyChecking=no REMOTE_USER@REMOTE_HOST 'docker pull seetharamkoya/react-docker:latest'
-            ssh -o StrictHostKeyChecking=no REMOTE_USER@REMOTE_HOST 'docker run -d -p 80:80 --name seetharamkoya/react-docker:latest'
+            ssh -o StrictHostKeyChecking=no ec2-user@ec2-3-124-122-180.eu-central-1.compute.amazonaws.com 'docker pull seetharamkoya/react-docker:latest'
+            ssh -o StrictHostKeyChecking=no ec2-user@ec2-3-124-122-180.eu-central-1.compute.amazonaws.com 'docker run -d -p 80:80 --name seetharamkoya/react-docker:latest'
           
