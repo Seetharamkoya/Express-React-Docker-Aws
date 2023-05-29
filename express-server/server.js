@@ -6,7 +6,7 @@ const app = express();
 // Configure CORS to allow requests from http://ec2-3-124-122-180.eu-central-1.compute.amazonaws.com
 app.use(
   cors({
-    origin: 'https://ec2-35-157-187-47.eu-central-1.compute.amazonaws.com',
+    origin: 'http://35.157.187.47:5000/helloworld',
   })
 );
 
