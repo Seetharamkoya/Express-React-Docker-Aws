@@ -1,6 +1,9 @@
 name: Build and Push Docker Images-react
 on:
-  workflow_dispatch
+  push:
+    branches:
+      - main
+
 
 
 env:
@@ -10,7 +13,7 @@ env:
 
 jobs:
   build-and-push:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
       - name: Lowercase the repo name
@@ -44,27 +47,4 @@ jobs:
           
   
 
-  deploy-react:
-    needs: build-and-push 
-    runs-on: ubuntu-latest 
-        
-    steps:
-      - uses: actions/checkout@v2
-      - name: Deploy to EC2 Instance
-        uses: easingthemes/ssh-deploy@main
-        env:
-          REMOTE_HOST: ec2-3-124-122-180.eu-central-1.compute.amazonaws.com
-          REMOTE_USER: ec2-user
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}  
-          SSH_PUBLIC_KEY: ${{ secrets.SSH_PUBLIC_KEY }}  
-          SSH_PEM_KEY: ${{ secrets.SSH_PEM_KEY }}  
-          aws-access-key-id: '${{ secrets.TF_USER_AWS_KEY }}'
-          aws-secret-access-key: '${{ secrets.TF_USER_AWS_SECRET }}'
-          aws-region: eu-central-1
-
-      - name: Deploy to EC2
-        run: |
-          echo "$SSH_PEM_KEY" > Docker_aws.pem && chmod 400 Docker_aws.pem && ls && pwd
-          ssh -i "Docker_aws.pem" ec2-user@ec2-3-124-122-180.eu-central-1.compute.amazonaws.com 'docker ps'
-
-     
+  
