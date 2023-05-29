@@ -19,6 +19,9 @@ RUN npm run build
 # Stage 2: Serve React app with Nginx
 FROM nginx:1.21-alpine
 
+# Remove the default Nginx configuration
+RUN rm -rf /etc/nginx/conf.d/*
+
 # Copy Nginx configuration
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
