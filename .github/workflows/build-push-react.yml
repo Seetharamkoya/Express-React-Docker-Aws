@@ -58,11 +58,11 @@ jobs:
               whoami
               sudo apt update
               sudo docker --version
-              sudo docker pull seetharamkoya/react-docker:${{ steps.version.outputs.version }}
+              sudo docker pull seetharamkoya/react-docker
               sudo docker images
               sudo docker ps
-              sudo docker stop seetharamkoya/react-docker:${{ steps.version.outputs.version }}
-              sudo docker rm seetharamkoya/react-docker:${{ steps.version.outputs.version }}
+              sudo docker stop seetharamkoya/react-docker
+              sudo docker rm seetharamkoya/react-docker
               sudo docker run -d -p 80:80 seetharamkoya/react-docker
               
 
