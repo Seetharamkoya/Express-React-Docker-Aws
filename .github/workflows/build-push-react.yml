@@ -60,8 +60,8 @@ jobs:
           aws-secret-access-key: '${{ secrets.TF_USER_AWS_SECRET }}'
           aws-region: eu-central-1
 
-      - name: Deploy to EC2
-        run: |
-            ssh -o StrictHostKeyChecking=no ec2-user@ec2-3-124-122-180.eu-central-1.compute.amazonaws.com 'docker pull seetharamkoya/react-docker:latest'
-            ssh -o StrictHostKeyChecking=no ec2-user@ec2-3-124-122-180.eu-central-1.compute.amazonaws.com 'docker run -d -p 80:80 --name seetharamkoya/react-docker:latest'
-          
+      run: |
+        echo "$SSH_PRIVATE_KEY" > SSH_PRIVATE_KEY  && chmod 600 SSH_PRIVATE_KEY 
+        ssh -o StrictHostKeyChecking=no -i SSH_PRIVATE_KEY ${REMOTE_USER}@${REMOTE_HOST} 'docker ps'
+
+     
