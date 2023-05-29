@@ -56,12 +56,13 @@ jobs:
           REMOTE_HOST: ec2-3-124-122-180.eu-central-1.compute.amazonaws.com
           REMOTE_USER: ec2-user
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}  
+          SSH_PUBLIC_KEY: ${{ secrets.SSH_PUBLIC_KEY }}  
           aws-access-key-id: '${{ secrets.TF_USER_AWS_KEY }}'
           aws-secret-access-key: '${{ secrets.TF_USER_AWS_SECRET }}'
           aws-region: eu-central-1
 
       run: |
-        echo "$SSH_PRIVATE_KEY" > SSH_PRIVATE_KEY  && chmod 600 SSH_PRIVATE_KEY 
+        echo "$SSH_PUBLIC_KEY" > ~/.ssh/authorized_keys
         ssh -o StrictHostKeyChecking=no -i SSH_PRIVATE_KEY ${REMOTE_USER}@${REMOTE_HOST} 'docker ps'
 
      
