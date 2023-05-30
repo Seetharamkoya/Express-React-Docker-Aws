@@ -38,6 +38,7 @@ Now, All the changes are automatically deployed to Ec2 Instance. We can also set
 * Terraform 
 * AWS Cloud, EC2, S3 and Elastic IP.
 * GitHub-Actions
+* Notifications: slack
 
 
 ---
