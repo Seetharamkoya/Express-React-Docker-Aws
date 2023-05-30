@@ -2,6 +2,8 @@
 
 I have set up a CI/CD pipeline to automate the build and deployment process for a full-stack application. The application consists of a React frontend and an Express backend. Docker is used to build and publish container images to Docker Hub, and these images are then deployed to an AWS EC2 instance.
 
+---
+
 The CI/CD pipelinesteps:
 
 - Code changes are pushed to the repository.
@@ -13,6 +15,7 @@ The CI/CD pipelinesteps:
 - The EC2 instance pulls the updated images and starts the containers.
 - The application is now updated and running on the EC2 instance.
 - This CI/CD setup streamlines the development and deployment process by automating the building, versioning, and deployment of containerized applications using Docker and Docker Hub, with the final deployment happening on an AWS EC2 instance.
+---
 
 ### AWS Infrastructure
 
@@ -24,3 +27,17 @@ Now, All the changes are automatically deployed to Ec2 Instance. We can also set
 
 **Note**:
  I have enable notifications on slack and Github for issues and all other actions on the repository.
+ 
+ 
+---
+
+### 🛠️ Worked with:
+* React
+* Express server
+* Docker
+* Terraform 
+* AWS Cloud, EC2, S3 and Elastic IP.
+* GitHub-Actions
+
+
+---
